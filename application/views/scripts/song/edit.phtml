@@ -1,0 +1,36 @@
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.11/jquery-ui.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+	$('#artist_name').autocomplete({
+	    source: "/artist/search/?length=5",
+	    minLength: 2,
+	    select: function( event, ui ) {
+		$('#artist').get(0).value = ui.item.id;
+	    },
+	    change: function() {
+		$('#artist').get(0).value = null;
+	    }
+	});
+    });</script>
+<?php 
+$form = $this->form->setAction($this->url());
+?>
+
+<form method="<?php echo $form->getMethod() ?>" id="karaoke-form" action="<?php echo $form->getAction() ?>">
+    <?php echo $form->id->renderViewHelper() ?>
+    <?php echo $form->artist->renderViewHelper() ?>
+    <div>
+	<?php echo $form->name->renderLabel() . $form->name->renderViewHelper() ?>
+    </div>
+    <div>
+	<?php echo $form->simpleName->renderLabel() . $form->simpleName->renderViewHelper() ?>
+    </div>
+    <div>
+	<?php echo $form->artist_name->renderLabel() . $form->artist_name->renderViewHelper() ?>
+    </div>
+
+    <div>
+	<?php echo $this->formSubmit('submit', 'Save') ?>
+    </div>
+</form>

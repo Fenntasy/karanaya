@@ -1,0 +1,30 @@
+<script type="text/javascript" charset="utf-8">
+	$(document).ready(function() {
+		$('#game-list').dataTable({
+			"sAjaxSource": "<?php echo $this->url(array('controller' => 'game', 'action' => 'listjson'), 'default') ?>",
+			"bProcessing": true,
+			"sProcessing": true,
+			"aoColumns": [
+				{ "bVisible": false },
+				null
+			],
+			"aaSorting": [[1, "asc"]],
+			"sPaginationType": "full_numbers",
+			"iDisplayLength": 25,
+			"aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "All"]],
+			"fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+				$('td:eq(0)', nRow).html( '<a href="/game/' + aData[0] + '">' + aData[1] + '</a><span class="right"><a href="/game/edit/' + aData[0] + '"><img src="/images/edit.gif" /></a></span>' );
+				return nRow;
+			}
+
+		});
+	} );
+</script>
+<table id="game-list" class="content-list">
+  <thead>
+	<tr><th>id</th><th>Name</th></tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+

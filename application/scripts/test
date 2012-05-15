@@ -1,0 +1,105 @@
+object(stdClass)#10 (24) {
+  ["sequels"]=>
+  array(0) {
+  }
+  ["status"]=>
+  string(15) "finished airing"
+  ["image_url"]=>
+  string(51) "http://cdn.myanimelist.net/images/anime/4/19644.jpg"
+  ["type"]=>
+  string(2) "TV"
+  ["score"]=>
+  NULL
+  ["listed_anime_id"]=>
+  NULL
+  ["side_stories"]=>
+  array(1) {
+    [0]=>
+    object(stdClass)#7 (3) {
+      ["url"]=>
+      string(62) "http://myanimelist.net/anime/5/Cowboy_Bebop:_Tengoku_no_Tobira"
+      ["anime_id"]=>
+      string(1) "5"
+      ["title"]=>
+      string(31) "Cowboy Bebop: Tengoku no Tobira"
+    }
+  }
+  ["classification"]=>
+  string(30) "R - 17+ (violence & profanity)"
+  ["tags"]=>
+  array(6) {
+    [0]=>
+    string(6) "action"
+    [1]=>
+    string(9) "adventure"
+    [2]=>
+    string(6) "comedy"
+    [3]=>
+    string(5) "drama"
+    [4]=>
+    string(6) "sci-fi"
+    [5]=>
+    string(5) "space"
+  }
+  ["genres"]=>
+  array(6) {
+    [0]=>
+    string(6) "Action"
+    [1]=>
+    string(9) "Adventure"
+    [2]=>
+    string(6) "Comedy"
+    [3]=>
+    string(5) "Drama"
+    [4]=>
+    string(6) "Sci-Fi"
+    [5]=>
+    string(5) "Space"
+  }
+  ["watched_episodes"]=>
+  int(0)
+  ["members_score"]=>
+  float(8.83)
+  ["other_titles"]=>
+  object(stdClass)#6 (1) {
+    ["japanese"]=>
+    array(1) {
+      [0]=>
+      string(27) "カウボーイビバップ"
+    }
+  }
+  ["watched_status"]=>
+  NULL
+  ["members_count"]=>
+  int(84401)
+  ["manga_adaptations"]=>
+  array(1) {
+    [0]=>
+    object(stdClass)#5 (3) {
+      ["manga_id"]=>
+      string(3) "173"
+      ["url"]=>
+      string(45) "http://myanimelist.net/manga/173/Cowboy_Bebop"
+      ["title"]=>
+      string(12) "Cowboy Bebop"
+    }
+  }
+  ["rank"]=>
+  int(18)
+  ["favorited_count"]=>
+  int(6943)
+  ["title"]=>
+  string(12) "Cowboy Bebop"
+  ["prequels"]=>
+  array(0) {
+  }
+  ["popularity_rank"]=>
+  int(15)
+  ["id"]=>
+  int(1)
+  ["episodes"]=>
+  int(26)
+  ["synopsis"]=>
+  string(433) "Enter a world in the distant future, where Bounty Hunters roam the solar system. Spike and Jet, bounty hunting partners, set out on journeys in an ever struggling effort to win bounty rewards to survive.<br><br>
+While traveling, they meet up with other very interesting people. Could Faye, the beautiful and ridiculously poor gambler, Edward, the computer genius, and Ein, the engineered dog be a good addition to the group?<br><br>"
+}

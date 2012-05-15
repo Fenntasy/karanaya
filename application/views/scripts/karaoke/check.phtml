@@ -1,0 +1,14 @@
+<h2>Videos that don't exist (<?php echo count($this->faulty_videos) ?>)</h2>
+<?php foreach($this->faulty_videos as $k) : ?>
+    <?php echo Application_Model_KaraokeSourceType::getInstance()->getDirectory($k->getSourceType()) ?>/<?php echo $k->getFilename(); ?> - <a href="<?php echo $this->url(array('controller' => 'karaoke', 'id' => $k->getId()), 'edit'); ?>"><img src="/images/edit.gif" /></a><br/>
+<?php endforeach; ?>
+
+<h2>Subs that don't exist (<?php echo count($this->faulty_subs) ?>)</h2>
+<?php foreach($this->faulty_subs as $k) : ?>
+    <?php echo Application_Model_KaraokeSourceType::getInstance()->getDirectory($k->getSourceType()) ?>/<?php echo $k->getSubFilename(); ?> - <a href="<?php echo $this->url(array('controller' => 'karaoke', 'id' => $k->getId()), 'edit'); ?>"><img src="/images/edit.gif" /></a><br/>
+<?php endforeach; ?>
+
+<h2>Files that don't have matching karaoke (<?php echo count($this->faulty_files) ?>)</h2>
+<?php foreach($this->faulty_files as $f) : ?>
+    <?php echo $this->faulty_files_dirs[$f] ?>/<?php echo $f ?><br/>
+<?php endforeach; ?>

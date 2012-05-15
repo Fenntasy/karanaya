@@ -1,0 +1,19 @@
+<div id="video-image">
+	<?php if ($this->isAnime) : ?>
+		<img src="/images/anime/<?php echo $this->karaoke->getSource()->getId(); ?>.jpg" />
+	<?php endif; ?>
+</div>
+<div id="video-infos">
+	<strong>ID :</strong> <?php echo $this->karaoke->getId(); ?><br/>
+	<strong>Filename :</strong> <?php echo $this->karaoke->getFilename(); ?><br/>
+	<?php if (file_exists($this->directory . '/' . $this->karaoke->getSubFilename())) : ?>
+		<strong>Subtitle :</strong> <a href="/karafiles/<?php echo $this->karaoke->getSubFilename(); ?>"><?php echo $this->karaoke->getSubFilename(); ?></a><br/>
+	<?php endif; ?>
+	<strong>Styles</strong><ul>
+	<?php if(isset($this->fonts)) : ?>
+		<?php foreach($this->fonts as $style => $font) : ?>
+			<li><?php echo $style ?> => <?php echo $font ?></li>
+		<?php endforeach; ?>
+	<?php endif; ?>
+	</ul>
+</div>

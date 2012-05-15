@@ -1,0 +1,222 @@
+@CHARSET "UTF-8";
+
+@font-face {
+    font-family: 'Prosto One';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Prosto One'), local('ProstoOne-Regular'), url('/fonts/ProstoOne.woff') format('woff');
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+a, a:visited {
+    color: blue;
+}
+
+#header {
+    background-color: #2E51A2;
+    color: white;
+    height: 30px;
+    -webkit-box-shadow: 0px 5px 11px #AAA;
+    -moz-box-shadow: 0px 5px 11px #AAA;
+    box-shadow: 0px 5px 11px #AAA;
+
+}
+
+#header-logo {
+    font-family: 'Prosto One';
+    font-size: 15pt;
+    height: 27px
+    padding-top: 3px;
+    width: 100px;
+}
+
+#header-logo a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#header-logo a:hover {
+    color: #eee;
+}
+
+#header-wrapper {
+    width: 1270px;
+    height: 25px;
+    padding-left: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#header-navigation {
+    width: 1060px;
+    height: 30px;
+    text-align: right;
+}
+
+.nav {
+    float: right;
+    color: white;
+    margin-right: 10px;
+    height: 28px;
+    width: 70px;
+    padding-top: 2px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin: 0;
+    text-align: center;
+    border-left: 1px solid darkblue;
+    text-decoration: none;
+}
+
+.nav:hover {
+    background-color: #829ACD;
+}
+
+a.nav {
+    background-color: #627AAD;
+    color: white;
+	text-decoration: none;
+}
+
+#wrapper {
+    width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+}
+
+#sidebar {
+    display: block;
+    float: left;
+    width: 200px;
+    min-height: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#mainmenu {
+    float: left;
+    height: 30px;
+}
+
+.main {
+    float: left;
+    text-align: center;
+    height: 30px;
+    border-right: 1px solid darkblue;
+    background-color: #627AAD;
+}
+
+.main a {
+    display: block;
+    height: 28px;
+    padding-top: 2px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin: 0;
+    text-decoration: none;
+    color: white;
+}
+
+.main a:hover {
+    background-color: #829ACD;
+}
+
+#actionmenu {
+    width: 100%;
+    border-bottom: 1px dotted black;
+    margin-bottom: 20px;
+    height: 20px;
+}
+
+.action {
+    float: left;
+    min-width: 50px;
+    margin-right: 15px;
+}
+
+#content {
+    float: left;
+    width: 1058px;
+}
+
+.clear {
+    clear: both;
+}
+
+#anime-desc-left{
+    float: left;
+    margin-right: 20px;
+    width: 250px;
+}
+
+#anime-desc-right {
+    float: left;
+    width: 750px;
+}
+
+.horizontal-list li {
+    list-style-type: none;
+    display: inline-block;
+}
+
+form dt {
+    float: left;
+    width: 180px;
+}
+
+form input {
+    border: 1px solid gray;
+    margin-top: 5px;
+}
+
+.right {
+    float: right;
+}
+
+.ui-autocomplete {
+    background-color: white;
+    max-width: 739px;
+    border-left: 1px solid gray;
+    border-bottom: 1px solid gray;
+    border-right: 1px solid gray;
+    padding: 0;
+}
+
+.ui-autocomplete li {
+    list-style-type: none;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 20px;
+}
+
+.ui-autocomplete li:hover {
+    background-color: lightgray;
+}
+
+#errors {
+    border: 1px solid red;
+    width: 100%;
+    text-align: center;
+    color: red;
+    padding: 5px;
+    display: none;
+}
+
+.sourcetype-selector {
+    display: inline-block;
+    border: 1px solid gray;
+    -moz-border-radius: 4px;
+    padding: 3px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.selected {
+    background-color: lightblue;
+}

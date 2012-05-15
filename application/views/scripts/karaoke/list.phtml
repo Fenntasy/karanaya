@@ -1,0 +1,52 @@
+<script type="text/javascript" charset="utf-8">
+	$(document).ready(function() {
+		$('#video-list').dataTable({
+			"aoColumns": [
+				{ "bVisible": false },
+				{ "sWidth": "60px" },
+				{ "sWidth": "250px" },
+				{ "sWidth": "40px" },
+				{ "sWidth": "150px" },
+				{ "sWidth": "100px" },
+				{ "sWidth": "50px" },
+				{ "sWidth": "50px" },
+				{ "sWidth": "50px" },
+				{ "sWidth": "50px" },
+				{ "sWidth": "50px" },
+				{ "sWidth": "30px" }
+			],
+			"bProcessing": true,
+			'sProcessing': true,
+			"sAjaxSource": "/karaoke/listjson",
+			"sPaginationType": "full_numbers",
+			"iDisplayLength": 25,
+			"aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "All"]],
+			"fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+				$('td:eq(1)', nRow).html( '<a href="/karaoke/' + aData[0] + '">' + aData[2] + '</a>' );
+				$('td:eq(10)', nRow).html( '<a href="/karaoke/edit/' + aData[0] + '"><img src="/images/edit.gif" /></a>' );
+				return nRow;
+			}
+		});
+	} );
+</script>
+<table id="video-list" class="content-list">
+  <thead>
+	<tr>
+	  <th>ID</th>
+	  <th>Source Type</th>
+	  <th>Source</th>
+	  <th>Type</th>
+	  <th>Song</th>
+	  <th>Version</th>
+	  <th>Extension</th>
+	  <th>Duration</th>
+	  <th>Sub</th>
+	  <th>Made By</th>
+	  <th>Language</th>
+	  <th></th>
+	</tr>
+  </thead>
+  <tbody>
+	<tr><td colspan="2">Loading</td></tr>
+  </tbody>
+</table>

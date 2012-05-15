@@ -1,0 +1,80 @@
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.11/jquery-ui.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+	$('.sourcetype-selector').click(function () {
+	    $('.sourcetype-selector').removeClass('selected');
+	    $(this).addClass('selected');
+	    $.get('/karaoke/form/type/' + this.id, function(data) {
+		$('#form-container').html(data);
+		$(document).ready(function() {
+		    $('#anime_name').autocomplete({
+			source: "/anime/search/?length=8",
+			minLength: 2,
+			select: function( event, ui ) {
+			    $('#source').get(0).value = ui.item.id;
+			}
+		    });
+		    $('#game_name').autocomplete({
+			source: "/game/search/?length=5",
+			minLength: 2,
+			select: function( event, ui ) {
+			    $('#source').get(0).value = ui.item.id;
+			}
+		    });
+		    $('#artist_name').autocomplete({
+			source: "/artist/search/?length=5",
+			minLength: 2,
+			select: function( event, ui ) {
+			    $('#source').get(0).value = ui.item.id;
+			}
+		    });
+			$('#tvshow_name').autocomplete({
+				source: "/tvshow/search/?length=5",
+				minLength: 2,
+				select: function( event, ui ) {
+					$('#source').get(0).value = ui.item.id;
+					$('#tvshowEpisode_name').autocomplete("destroy").autocomplete({
+						source: "/tvshow/searchepisode/?show=" + $("#source").val() + "&length=5",
+						minLength: 2,
+						select: function( event, ui ) {
+							$('#subSource').get(0).value = ui.item.id;
+						}
+					});
+				}
+			});
+		    $('#song_name').autocomplete({
+			source: "/song/search/?withArtist=1&length=5",
+			minLength: 2,
+			select: function( event, ui ) {
+			    $('#song').get(0).value = ui.item.id;
+			}
+		    });
+		    <?php
+		    $auth = Zend_Auth::getInstance();
+		    if (!$auth->hasIdentity()) : ?>
+			$('#content input[type="submit"]').attr('disabled', 'disabled');
+		    <?php endif; ?>
+		});
+	    });
+	})
+    });
+</script>
+<style>
+    #type-element {
+	display: inline-block;
+	margin: 0;
+	padding: 0;
+	width: 150px;
+    }
+    #typeNumber {
+	display: inline-block;
+    }
+</style>
+<div class="sourcetype-selector" id="1">Anime</div>
+<div class="sourcetype-selector" id="2">Tv Show</div>
+<div class="sourcetype-selector" id="4">Game</div>
+<div class="sourcetype-selector" id="5">Misc</div>
+<div class="sourcetype-selector" id="6">Artist</div>
+<div id="errors"></div>
+<div id="form-container"></div>

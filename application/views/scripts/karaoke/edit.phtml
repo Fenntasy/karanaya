@@ -1,0 +1,115 @@
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.11/jquery-ui.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+	$('#anime_name').autocomplete({
+	    source: "/anime/search/?length=5",
+	    minLength: 2,
+	    select: function( event, ui ) {
+		$('#source').get(0).value = ui.item.id;
+	    }
+	});
+	$('#game_name').autocomplete({
+	    source: "/game/search/?length=5",
+	    minLength: 2,
+	    select: function( event, ui ) {
+		$('#source').get(0).value = ui.item.id;
+	    }
+	});
+	$('#artist_name').autocomplete({
+	    source: "/artist/search/?length=5",
+	    minLength: 2,
+	    select: function( event, ui ) {
+		$('#source').get(0).value = ui.item.id;
+	    }
+	});
+	$('#tvshow_name').autocomplete({
+		source: "/tvshow/search/?withArtist=1&length=5",
+		minLength: 2,
+		select: function( event, ui ) {
+			$('#source').get(0).value = ui.item.id;
+			$('#tvshowEpisode_name').autocomplete("destroy").autocomplete({
+				source: "/tvshow/searchepisode/?show=" + $("#source").val() + "&length=5",
+				minLength: 2,
+				select: function( event, ui ) {
+					$('#subSource').get(0).value = ui.item.id;
+				}
+			});
+		}
+	});
+	$('#tvshowEpisode_name').autocomplete({
+		source: "/tvshow/searchepisode/?show=" + $("#source").val() + "&length=5",
+		minLength: 2,
+		select: function( event, ui ) {
+			$('#subSource').get(0).value = ui.item.id;
+		}
+	});
+	$('#song_name').autocomplete({
+	    source: "/song/search/?withArtist=1&length=5",
+	    minLength: 2,
+	    select: function( event, ui ) {
+		$('#song').get(0).value = ui.item.id;
+	    }
+	});
+    });
+</script>
+<style>
+    #type-element {
+	display: inline-block;
+	margin: 0;
+	padding: 0;
+	width: 150px;
+    }
+    #typeNumber {
+	display: inline-block;
+    }
+</style>
+<?php
+if (isset($this->form)) {
+    $form = $this->form->setAction($this->url());
+    $form->removeDecorator('Form');
+    $form->addDecorator(new Application_Form_Decorator_Form());
+    $form->addDecorator(new Application_Form_Decorator_JsValidation());
+}
+if (isset($this->form_anime)) {
+    $form_anime = $this->form_anime->setAction($this->url());
+    $form_anime->removeDecorator('Form');
+    $form_anime->addDecorator(new Application_Form_Decorator_Form());
+    $form_anime->addDecorator(new Application_Form_Decorator_JsValidation());
+}
+if (isset($this->form_game)) {
+    $form_game = $this->form_game->setAction($this->url());
+    $form_game->removeDecorator('Form');
+    $form_game->addDecorator(new Application_Form_Decorator_Form());
+    $form_game->addDecorator(new Application_Form_Decorator_JsValidation());
+}
+if (isset($this->form_artist)) {
+    $form_artist = $this->form_artist->setAction($this->url());
+    $form_artist->removeDecorator('Form');
+    $form_artist->addDecorator(new Application_Form_Decorator_Form());
+    $form_artist->addDecorator(new Application_Form_Decorator_JsValidation());
+}
+if (isset($this->form_tvshow)) {
+	$form_tvshow = $this->form_tvshow->setAction($this->url());
+	$form_tvshow->removeDecorator('Form');
+	$form_tvshow->addDecorator(new Application_Form_Decorator_Form());
+	$form_tvshow->addDecorator(new Application_Form_Decorator_JsValidation());
+}
+?>
+<div id="errors"></div>
+<?php
+if (isset($this->form_anime)) {
+    echo $form_anime;
+}
+if (isset($this->form_game)) {
+    echo $form_game;
+}
+if (isset($this->form_artist)) {
+    echo $form_artist;
+}
+if (isset($this->form_tvshow)) {
+	echo $form_tvshow;
+}
+if (isset($this->form)) {
+    echo $form;
+}

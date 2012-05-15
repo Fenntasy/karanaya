@@ -1,0 +1,36 @@
+<div id="anime-desc-left">
+  <img src="/images/anime/<?php echo $this->anime->getId(); ?>.jpg" />
+
+  <div class="left-block">
+	<strong>Other titles :</strong> <ul>
+	<?php foreach($this->anime->getOtherTitles() as $type => $titles) : ?>
+	<li><?php echo $type; ?>
+	<ul>
+	  <?php foreach($titles as $title) : ?>
+	  <li><?php echo $title; ?></li>
+	  <?php endforeach; ?>
+	</ul>
+	</li>
+	<?php endforeach; ?>
+  </ul>
+  </div>
+</div>
+<div id="anime-desc-right">
+  <strong>ID :</strong> <?php echo $this->anime->getId(); ?><br/>
+  <strong>Name :</strong> <?php echo $this->anime->getName(); ?><br/>
+  <strong>Simple Name :</strong> <?php echo $this->anime->getSimpleName(); ?><br/>
+  <strong>Status :</strong> <?php echo $this->anime->getStatus(); ?><br/>
+  <strong>Episodes :</strong> <?php echo (($this->anime->getEpisodes())?$this->anime->getEpisodes():'unknown'); ?><br/>
+  <strong>Rating :</strong> <?php echo $this->anime->getClassification(); ?><br/>
+  <strong>Synopsis :</strong> <?php echo $this->anime->getSynopsis(); ?><br/>
+  <strong>Tags :</strong> <ul class="horizontal-list"> 
+  <?php foreach($this->anime->getTags() as $tag) : ?>
+  <li><a href="<?php echo $this->url(array('controller' => 'anime', 'action' => 'list', 'flag' => 'tag', 'search' => $tag['name']), 'flaglist'); ?>"><?php echo $tag['name']; ?></a></li>
+  <?php endforeach; ?>
+  </ul><br/>
+  <strong>Genres :</strong> <ul class="horizontal-list"> 
+  <?php foreach($this->anime->getGenres() as $genre) : ?>
+   <li><a href="<?php echo $this->url(array('controller' => 'anime', 'action' => 'list', 'flag' => 'genre', 'search' => $genre['name']), 'flaglist'); ?>"><?php echo $genre['name']; ?></a>	</li>
+  <?php endforeach; ?>
+  </ul><br/>
+</div>

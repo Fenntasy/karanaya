@@ -1,0 +1,17 @@
+<strong>ID :</strong> <?php echo $this->artist->getId(); ?><br/>
+<strong>Name :</strong> <?php echo $this->artist->getName(); ?><br/>
+<strong>Songs : </strong>
+<ul>
+<?php foreach ($this->artist->getSongs() as $song) : ?>
+	<li>
+	<a href="<?php echo $this->url(array('controller' => 'song', 'id' => $song->getId())); ?>"><?php echo $song->getName(); ?></a>
+	<?php if($this->karaokes[$song->getId()]) : ?>
+	<ul>
+		<?php foreach($this->karaokes[$song->getId()] as $karaoke) : ?>
+		<li><a href="<?php echo $this->url(array('controller' => 'karaoke', 'id' => $karaoke->getId())); ?>"><?php echo $karaoke->getBaseName(); ?></a></li>
+		<?php endforeach; ?>
+	</ul>
+	<?php endif; ?>
+	</li>
+<?php endforeach; ?>
+</ul>

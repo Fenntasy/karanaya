@@ -1,0 +1,50 @@
+<!-- application/layouts/scripts/layout.phtml -->
+<?php echo $this->doctype(); ?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="icon" href="/images/favicon.ico" type="image/x-icon" />
+  <?php echo $this->headTitle(); ?>
+  <?php echo $this->headLink(); ?>
+  <?php echo $this->headScript(); ?>
+  <link rel="stylesheet" href="/css/demo_page.css" type="text/css">
+  <link rel="stylesheet" href="/css/demo_table.css" type="text/css">
+  <link rel="stylesheet" href="/css/demo_table_jui.css" type="text/css">
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script type="text/javascript" src="/js/jquery.dataTables.min.js"></script>
+</head>
+<body>
+<div id="header">
+	<div id="header-wrapper">
+	    <div id="header-logo" style="float: left">
+	        <a href="/">karanaya</a>
+	    </div>
+	    <div id="header-navigation" style="float: right">
+	    	<?php 
+		    $this->placeholder('mainmenu')->append('<a href="' . $this->url(array('controller' => 'anime', 'action' => 'list'), 'default') . '">Anime</a>');
+			$this->placeholder('mainmenu')->append('<a href="' . $this->url(array('controller' => 'tvshow', 'action' => 'list'), 'default') . '">TV Shows</a>');
+		    $this->placeholder('mainmenu')->append('<a href="' . $this->url(array('controller' => 'game', 'action' => 'list'), 'default') . '">Games</a>');
+		    $this->placeholder('mainmenu')->append('<a href="' . $this->url(array('controller' => 'artist', 'action' => 'list'), 'default') . '">Artists</a>');
+		    $this->placeholder('mainmenu')->append('<a href="' . $this->url(array('controller' => 'song', 'action' => 'list'), 'default') . '">Songs</a>');
+		    $this->placeholder('mainmenu')->append('<a href="' . $this->url(array('controller' => 'karaoke', 'action' => 'list'), 'default') . '">Karaoke</a>');
+		?>
+		<?php echo $this->placeholder('mainmenu') ?>
+		<a class="nav" href="<?php echo $this->url(array('controller' => 'Auth', 'action' => 'manage'),'default') ?>">Settings</a>
+		<a class="nav" href="<?php echo  $this->url(array('controller' => 'stat', 'action' => 'show'), 'default') ?>">Stats</a>
+	    </div>
+	    <div class="clear"></div>
+    </div>
+</div>
+
+<div id="wrapper">
+	<?php echo $this->placeholder('sidebar') ?>
+	<div id="content">
+	<?php echo $this->placeholder('actionmenu') ?>
+		<?php echo $this->layout()->content; ?>
+	</div>
+	<div class="clear"></div>
+</div>
+
+<?php echo $this->inlineScript() ?>
+</body>
+</html>

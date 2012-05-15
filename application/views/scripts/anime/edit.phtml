@@ -1,0 +1,14 @@
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.11/jquery-ui.min.js"></script>
+<?php 
+$form = $this->form->setAction($this->url());
+//Replace Form decorator with our own
+$form->removeDecorator('Form');
+$form->addDecorator(new Application_Form_Decorator_Form());
+
+//Add JsValidation
+$form->addDecorator(new Application_Form_Decorator_JsValidation());
+?>
+<div id="errors"></div>
+<?php
+echo $form;

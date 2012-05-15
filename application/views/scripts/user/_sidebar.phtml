@@ -1,0 +1,9 @@
+<?php $this->placeholder('sidebar')->captureStart() ?>
+<?php if (isset($this->loginForm)) : ?>
+    <?php echo $this->loginForm ?>
+    <a href="/register">Register</a>
+<?php else : ?>
+    <p>User: <?php echo $this->user->getDisplayName() ?></p>
+    <a href="/Auth/logout">logout</a>
+<?php endif; ?>
+<?php $this->placeholder('sidebar')->captureEnd() ?>
