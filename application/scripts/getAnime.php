@@ -17,6 +17,7 @@ Zend_Loader_Autoloader::getInstance();
 // Define some CLI options
 $getopt = new Zend_Console_Getopt(array(
     'id|i=i' 	=> 'MAL id of anime',
+    'list|l'    => 'Get the last id tested',
     'env|e-s'    => 'Application environment for which to create database (defaults to development)',
     'help|h'     => 'Help -- usage message',
 ));
@@ -29,11 +30,11 @@ try {
 }
  
 // If help requested, report usage message
-if ($getopt->getOption('h')) {
+if ($getopt->getOption('h') || !($getopt->getOption('i') || $getopt->getOption('l'))) {
     echo $getopt->getUsageMessage();
     return true;
 }
- 
+
 // Initialize values based on presence or absence of CLI options
 $id 	= $getopt->getOption('i');
 $env	= $getopt->getOption('e');
@@ -60,6 +61,12 @@ function handleError($errno, $errstr, $errfile, $errline, array $errcontext) {
     throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
 }
 set_error_handler('handleError');
+
+if ($getopt->getOption('l')) {
+    $lastId = $dbAdapter->fetchOne('SELECT mal_id FROM anime ORDER BY mal_id DESC');
+    echo $lastId . "\n";
+    return true;
+}
  
 // this block executes the actual retrieval of anime infor
 try {
