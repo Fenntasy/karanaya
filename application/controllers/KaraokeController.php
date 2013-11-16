@@ -60,19 +60,20 @@ class KaraokeController extends Application_Plugin_Action_Auth {
 			}
 		}
 		foreach ($karaokes as $karaoke) {
-			$output['aaData'][] = array($karaoke->getId(),
-										Application_Model_KaraokeSourceType::getInstance()->getDirectory($karaoke->getSourceType()),
-										$karaoke->getSource()->getName(),
-										$karaoke->getType()->identifier . $karaoke->getTypeNumber(),
-										$karaoke->getSong()->getName(),
-										$karaoke->getVersion(),
-										$karaoke->getExtension(),
-										$karaoke->getHumanDuration(),
-										$karaoke->getSubType()->name,
-										($karaoke->getMadeBy() ? $karaoke->getMadeBy()->getDisplayName() : 'Other'),
-										$karaoke->getLanguage()->name,
-										null
-										);
+			$output['aaData'][] = array(
+                $karaoke->getId(),
+                Application_Model_KaraokeSourceType::getInstance()->getDirectory($karaoke->getSourceType()),
+                $karaoke->getSource()->getName(),
+                $karaoke->getType()->identifier . $karaoke->getTypeNumber(),
+                $karaoke->getSong()->getName(),
+                $karaoke->getVersion(),
+                $karaoke->getExtension(),
+                $karaoke->getHumanDuration(),
+                $karaoke->getSubType()->name,
+                ($karaoke->getMadeBy() ? $karaoke->getMadeBy()->getDisplayName() : 'Other'),
+                $karaoke->getLanguage()->name,
+                null
+            );
 		}
 
 		echo json_encode($output);
@@ -107,7 +108,13 @@ class KaraokeController extends Application_Plugin_Action_Auth {
 		$form_tvshow = new Application_Form_Karaoke_Tvshow();
 
 		if ($this->getRequest()->isPost() && $form_anime->isValid($this->getRequest()->getPost())) {
-			$karaoke = new Application_Model_Karaoke($form_anime->getValues());
+            $data = $form_anime->getValues();
+            if (!$form_anime->getValue('song')) {
+                $song = new Application_Model_Song(array('name' => $form_anime->getValue('song_name')));
+                $song->save();
+                $data['song'] = $song->getId();
+            }
+			$karaoke = new Application_Model_Karaoke($data);
 			if ($karaoke->save()) {
 				$this->_redirect('/karaoke/edit/' . $karaoke->getId());
 			} else {
@@ -115,7 +122,13 @@ class KaraokeController extends Application_Plugin_Action_Auth {
 			}
 		}
 		if ($this->getRequest()->isPost() && $form_game->isValid($this->getRequest()->getPost())) {
-			$karaoke = new Application_Model_Karaoke($form_game->getValues());
+            $data = $form_game->getValues();
+            if (!$form_game->getValue('song')) {
+                $song = new Application_Model_Song(array('name' => $form_game->getValue('song_name')));
+                $song->save();
+                $data['song'] = $song->getId();
+            }
+			$karaoke = new Application_Model_Karaoke($data);
 			if ($karaoke->save()) {
 				$this->_redirect('/karaoke/edit/' . $karaoke->getId());
 			} else {
@@ -123,7 +136,13 @@ class KaraokeController extends Application_Plugin_Action_Auth {
 			}
 		}
 		if ($this->getRequest()->isPost() && $form_artist->isValid($this->getRequest()->getPost())) {
-			$karaoke = new Application_Model_Karaoke($form_artist->getValues());
+            $data = $form_artist->getValues();
+            if (!$form_artist->getValue('song')) {
+                $song = new Application_Model_Song(array('name' => $form_artist->getValue('song_name')));
+                $song->save();
+                $data['song'] = $song->getId();
+            }
+			$karaoke = new Application_Model_Karaoke($data);
 			if ($karaoke->save()) {
 				$this->_redirect('/karaoke/edit/' . $karaoke->getId());
 			} else {
@@ -131,7 +150,12 @@ class KaraokeController extends Application_Plugin_Action_Auth {
 			}
 		}
 		if ($this->getRequest()->isPost() && $form_misc->isValid($this->getRequest()->getPost())) {
-			$values = $form_misc->getValues();
+            $values = $form_misc->getValues();
+            if (!$form_misc->getValue('song')) {
+                $song = new Application_Model_Song(array('name' => $form_misc->getValue('song_name')));
+                $song->save();
+                $values['song'] = $song->getId();
+            }
 			$misc = new Application_Model_Misc(array('name' => $values['misc_name']));
 			$misc->save();
 			$values['source'] = $misc->getId();
@@ -143,7 +167,13 @@ class KaraokeController extends Application_Plugin_Action_Auth {
 			}
 		}
 		if ($this->getRequest()->isPost() && $form_tvshow->isValid($this->getRequest()->getPost())) {
-			$karaoke = new Application_Model_Karaoke($form_tvshow->getValues());
+            $data = $form_tvshow->getValues();
+            if (!$form_tvshow->getValue('song')) {
+                $song = new Application_Model_Song(array('name' => $form_tvshow->getValue('song_name')));
+                $song->save();
+                $data['song'] = $song->getId();
+            }
+			$karaoke = new Application_Model_Karaoke($data);
 			if ($karaoke->save()) {
 				$this->_redirect('/karaoke/edit/' . $karaoke->getId());
 			} else {
@@ -175,7 +205,7 @@ class KaraokeController extends Application_Plugin_Action_Auth {
 		$files_dirs = array();
 		if ($handle = opendir($directory)) {
 			while (false !== ($file = readdir($handle))) {
-				if (substr($file, 0, 1) != '.' && $file != 'Fonts' && $file != 'Temp' && is_dir($directory . $file) && $handle2 = opendir($directory . $file)) {
+				if (substr($file, 0, 1) != '.' && $file != 'Fonts' && $file != 'Playlists' && $file != 'Temp' && is_dir($directory . $file) && $handle2 = opendir($directory . $file)) {
 					while (false !== ($file2 = readdir($handle2))) {
 						if (substr($file2, 0, 1) != '.') {
 							$files[$file2] = $file2;
@@ -193,21 +223,29 @@ class KaraokeController extends Application_Plugin_Action_Auth {
 		foreach ($karaokes as $karaoke) {
 			$dir = $directory . Application_Model_KaraokeSourceType::getInstance()->getDirectory($karaoke->getSourceType());
 			if (!$karaoke->checkSubExists($dir)) {
-				$faulty_subs[] = $karaoke;
+				$faulty_subs[$dir.'/'.$karaoke->getFilename()] = $karaoke;
 			} else {
 				unset($files[$karaoke->getFilename()]);
 			}
 			if (!$karaoke->checkVideoExists($dir)) {
-				$faulty_videos[] = $karaoke;
+				$faulty_videos[$dir.'/'.$karaoke->getSubFilename()] = $karaoke;
 			} else {
 				unset($files[$karaoke->getSubFilename()]);
 			}
 		}
 
+
+        foreach($files as $f) {
+            $faulty_files[] = $files_dirs[$f] . '/' . str_replace(' ', '&nbsp;', $f);
+        }
+
+        sort($faulty_files);
+        ksort($faulty_videos);
+        ksort($faulty_subs);
+
 		$this->view->faulty_subs = $faulty_subs;
 		$this->view->faulty_videos = $faulty_videos;
-		$this->view->faulty_files = $files;
-		$this->view->faulty_files_dirs = $files_dirs;
+		$this->view->faulty_files = $faulty_files;
 	}
 
 	public function formAction() {

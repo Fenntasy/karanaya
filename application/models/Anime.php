@@ -5,6 +5,8 @@ class Application_Model_Anime extends Application_Model_Abstract {
 	
 	protected $_id;
 	protected $_name;
+	protected $_mal_id;
+	protected $_need_update;
 	protected $_simpleName;
 	protected $_episodes;
 	protected $_status;
@@ -100,6 +102,24 @@ class Application_Model_Anime extends Application_Model_Abstract {
 		return $this;
 	}
 
+    public function setMal_id($id) {
+        $this->_mal_id = (int) $id;
+        return $this;
+    }
+
+    public function getMal_id() {
+        return $this->_mal_id;
+    }
+
+    public function setNeed_update() {
+        $this->_need_update = 1;
+        return $this;
+    }
+
+    public function getNeed_update() {
+        return $this->_need_update;
+    }
+
 	public function getId() {
 		return $this->_id;
 	}
@@ -123,6 +143,8 @@ class Application_Model_Anime extends Application_Model_Abstract {
 	    return array(
 		'id' => $this->getId(),
 		'classification' => $this->getClassification(),
+        'mal_id' => $this->_mal_id?$this->_mal_id:null,
+        'need_update' => $this->_need_update?$this->_need_update:0,
 		'episodes' => $this->getEpisodes(),
 		'name' => $this->getName(),
 		'simpleName' => $this->getSimpleName(),

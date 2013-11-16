@@ -77,6 +77,35 @@ class Application_Form_Karaoke_Tvshow extends Zend_Form {
 		))
 			->addValidator('Digits');
 
+        $typeMapper = new Application_Model_DbTable_Type();
+        $types_r = $typeMapper->fetchAll();
+        $types = array();
+        foreach($types_r as $r) {
+            $types[$r['id']] = $r['name'];
+        }
+
+        $this->addElement(
+            'select', 'type', array(
+                'MultiOptions'	=> $types,
+                'required'	=> true,
+                'label'		=> 'Type'
+            )
+        );
+
+        $this->addElement(
+            'text', 'typeNumber', array(
+                'required'  => false,
+                'filters'   => array('StringTrim'),
+                'size'	    => 3
+            )
+        );
+        $this->typeNumber->setDecorators(array(
+            array('Label', null),
+            array('ViewHelper', array('separator' => '<br/>', 'placement' => 'prepend')),
+            array('Errors', null),
+            array('Description', array('p' => 'description'))
+        ));
+
 		$this->addElement(
 			'text', 'song_name', array(
 				'required'  => false,
@@ -88,7 +117,7 @@ class Application_Form_Karaoke_Tvshow extends Zend_Form {
 
 		$this->addElement(
 			'hidden', 'song', array(
-				'required'  => true,
+				'required'  => false,
 				'filters'   => array('StringTrim')
 			)
 		);
@@ -109,34 +138,14 @@ class Application_Form_Karaoke_Tvshow extends Zend_Form {
 			)
 		);
 
-		$typeMapper = new Application_Model_DbTable_Type();
-		$types_r = $typeMapper->fetchAll();
-		$types = array();
-		foreach($types_r as $r) {
-			$types[$r['id']] = $r['name'];
-		}
-
-		$this->addElement(
-			'select', 'type', array(
-			'MultiOptions'	=> $types,
-			'required'	=> true,
-			'label'		=> 'Type'
-			)
-		);
-
-		$this->addElement(
-			'text', 'typeNumber', array(
-				'required'  => false,
-				'filters'   => array('StringTrim'),
-				'size'	    => 3
-			)
-		);
-		$this->typeNumber->setDecorators(array(
-			array('Label', null),
-			array('ViewHelper', array('separator' => '<br/>', 'placement' => 'prepend')),
-			array('Errors', null),
-			array('Description', array('p' => 'description'))
-		));
+        $this->addElement(
+            'text', 'extension', array(
+                'required'  => false,
+                'filters'   => array('StringTrim'),
+                'label'	    => 'Extension',
+                'size'	    => 3
+            )
+        );
 
 		$subtypeMapper = new Application_Model_DbTable_Subtype();
 		$subtypes_r = $subtypeMapper->fetchAll();
@@ -168,25 +177,6 @@ class Application_Form_Karaoke_Tvshow extends Zend_Form {
 			)
 		);
 
-		$this->addElement(
-			'text', 'duration', array(
-				'required'  => false,
-				'filters'   => array('StringTrim'),
-				'label'	    => 'Duration',
-				'size'	    => 3
-			)
-		);
-		$this->duration->addValidator(new Application_Form_Validator_Duration());
-
-		$this->addElement(
-			'text', 'extension', array(
-				'required'  => false,
-				'filters'   => array('StringTrim'),
-				'label'	    => 'Extension',
-				'size'	    => 3
-			)
-		);
-
 		$userMapper = Application_Model_UserMapper::getInstance();
 		$users_r = $userMapper->fetchAll();
 		$users = array(0 => 'Other');
@@ -201,6 +191,16 @@ class Application_Form_Karaoke_Tvshow extends Zend_Form {
 				'label'	    => 'Made by'
 			)
 		);
+
+        $this->addElement(
+            'text', 'duration', array(
+                'required'  => false,
+                'filters'   => array('StringTrim'),
+                'label'	    => 'Duration',
+                'size'	    => 3
+            )
+        );
+        $this->duration->addValidator(new Application_Form_Validator_Duration());
 
 		$this->addElement(
 			'textarea', 'comment', array(

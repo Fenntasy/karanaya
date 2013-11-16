@@ -18,6 +18,7 @@ Zend_Loader_Autoloader::getInstance();
 $getopt = new Zend_Console_Getopt(array(
     'id|i=i' 	=> 'MAL id of anime',
     'list|l'    => 'Get the last id tested',
+    'update|u'   => 'Update entries that aren\'t finished airing',
     'env|e-s'    => 'Application environment for which to create database (defaults to development)',
     'help|h'     => 'Help -- usage message',
 ));
@@ -93,7 +94,7 @@ try {
 			$dbAdapter->insert('anime', $data);
 			$anime_id = $dbAdapter->fetchOne('SELECT id FROM anime WHERE mal_id = ?', $mal_infos->id);
 		} catch (Exception $e) {
-			echo PHP_EOL . 'Entry ' . $id . ' already exists' . PHP_EOL;
+			echo PHP_EOL . 'Entry ' . $id . '(' . $mal_infos->title . ') already exists, updating...' . PHP_EOL;
 			$dbAdapter->update('anime', $data, 'mal_id = ' . $mal_infos->id);
 			$select = new Zend_Db_Select($dbAdapter);
 			$anime_id = $dbAdapter->fetchOne('SELECT id FROM anime WHERE mal_id = ?', $mal_infos->id);

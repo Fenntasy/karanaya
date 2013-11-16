@@ -16,6 +16,7 @@ class AnimeController extends Application_Plugin_Action_Auth {
 		$id = $this->_request->getParam('id');
 		$anime = Application_Model_AnimeMapper::getInstance()->find($id);
 		if ($anime) {
+            $this->view->headTitle($anime->getName());
 			$this->view->anime = $anime;
 			$this->view->placeholder('actionmenu')->append('<a href="' . $this->view->url(array('id' => $id, 'controller' => 'anime'), 'edit') . '">Edit</a>');
 			$this->view->placeholder('actionmenu')->append('<a href="' . $this->view->url(array('id' => $id, 'controller' => 'anime'), 'delete') . '">Delete</a>');
@@ -23,6 +24,7 @@ class AnimeController extends Application_Plugin_Action_Auth {
 	}
 
 	public function listAction() {
+        $this->view->headTitle('Anime');
 		if ($this->_request->getParam('flag')) {
 			$authorized_flags = array('genre', 'tag');
 
@@ -88,10 +90,14 @@ class AnimeController extends Application_Plugin_Action_Auth {
 	}
 
 	public function addAction() {
+        $this->view->headTitle('Add Anime');
 		$form = new Application_Form_Anime();
 
 		if ($this->getRequest()->isPost() && $form->isValid($this->getRequest()->getPost())) {
 			$anime = new Application_Model_Anime($form->getValues());
+            if ($form->getValue('mal_id')) {
+                $anime->setNeed_update();
+            }
 			$anime->save();
 
 			$this->_redirect('/anime/edit/' . $anime->getId());
@@ -113,12 +119,16 @@ class AnimeController extends Application_Plugin_Action_Auth {
 		$form = new Application_Form_Anime();
 		if ($this->getRequest()->isPost() && $form->isValid($this->getRequest()->getPost())) {
 			$anime = new Application_Model_Anime($form->getValues());
+            if ($form->getValue('mal_id')) {
+                $anime->setNeed_update();
+            }
 			$anime->save();
 
 			$this->_redirect('/anime/' . $anime->getId());
 		} else {
 			$anime = Application_Model_AnimeMapper::getInstance()->find($id);
 		}
+        $this->view->headTitle('Edit - ' . $anime->getName());
 
 		$form->populate($anime->__toArray());
 		$this->view->form = $form;

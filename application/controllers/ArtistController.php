@@ -17,6 +17,7 @@ class ArtistController extends Application_Plugin_Action_Auth {
 
 		$artist = Application_Model_Mapper_Artist::getInstance()->find($id);
 		if ($artist) {
+            $this->view->headTitle($artist->getName());
 			$this->view->artist = $artist;
 			$karaokes = array();
 			foreach($artist->getSongs() as $song) {
@@ -54,6 +55,7 @@ class ArtistController extends Application_Plugin_Action_Auth {
 
 	public function addAction() {
 		$form = new Application_Form_Artist();
+        $this->view->headTitle('Add Artist');
 
 		if ($this->getRequest()->isPost() && $form->isValid($this->getRequest()->getPost())) {
 			$artist = new Application_Model_Artist($form->getValues());
@@ -79,6 +81,7 @@ class ArtistController extends Application_Plugin_Action_Auth {
 			$artist = Application_Model_Mapper_Artist::getInstance()->find($id);
 		}
 
+        $this->view->headTitle('Edit - ' . $artist->getName());
 		$form->populate($artist->__toArray());
 		$this->view->placeholder('actionmenu')->append('<a href="' . $this->view->url(array('id' => $artist->getId(), 'controller' => 'artist'), 'delete') . '">Delete</a>');
 		$this->view->form = $form;

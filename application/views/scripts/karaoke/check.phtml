@@ -10,5 +10,5 @@
 
 <h2>Files that don't have matching karaoke (<?php echo count($this->faulty_files) ?>)</h2>
 <?php foreach($this->faulty_files as $f) : ?>
-    <?php echo $this->faulty_files_dirs[$f] ?>/<?php echo $f ?><br/>
+    <?php echo $f; ?><br/>
 <?php endforeach; ?>
